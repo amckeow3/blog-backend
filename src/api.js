@@ -1,9 +1,15 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 const router = express.Router();
 
+var corsOption = {
+    origin: '*'
+};
+
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,12 +26,19 @@ database.once('connected', () => {
     console.log('Database Connected');
 })
 
+app.use(function(req, res, next) {
+    res.header(
+        "Access-Control-Allow-Headers",
+        "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+});
+
 router.get("/", (req, res) => {
     res.json({
       hello: "hi!"
     });
   });
-  
 
 //Get all Method
 router.get('/getAllPosts', (req, res, callback) => {
