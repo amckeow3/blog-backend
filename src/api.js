@@ -20,6 +20,13 @@ database.once('connected', () => {
     console.log('Database Connected');
 })
 
+router.get("/", (req, res) => {
+    res.json({
+      hello: "hi!"
+    });
+  });
+  
+
 //Get all Method
 router.get('/getAllPosts', (req, res, callback) => {
     try{
